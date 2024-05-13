@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Function to get the number of files in the current directory
+get_file_count() {
+  ls -l | grep -c "^-"
+}
+
+# Get the actual number of files
+file_count=$(get_file_count)
+
+# Main loop for guessing game
+guess_again="yes"
+while [[ $guess_again == "yes" ]]; do
+  # Ask for the guess
+  read -p "Guess the number of files in this directory: " guess
+
+  # Check if guess is correct
+  if [[ $guess -eq $file_count ]]; then
+    echo "Congratulations! You guessed the correct number of files!"
+    guess_again="no"
+  else
+    # Give hint based on guess
+    if [[ $guess -lt $file_count ]]; then
+      echo "Your guess is too low. Try again!"
+    else
+      echo "Your guess is too high. Try again!"
+    fi
+  fi
+done
